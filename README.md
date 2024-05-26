@@ -15,7 +15,7 @@ This repository contains a Python implementation of an LR(0) parser. The LR(0) p
 
 - Python 3.6 or higher (3.9.12 recommended)
 - `termtables` library for displaying parsing tables
-- 'collections' library for counting occurences
+- `collections` library for counting occurences
 
 ### Steps
 
@@ -59,7 +59,7 @@ This repository contains a Python implementation of an LR(0) parser. The LR(0) p
 5. **Enter the string to be parsed**:
 
     ```plaintext
-    Enter the string to be parsed: ccd
+    Enter the string to be parsed: aabb
     ```
 
 6. **Parsing result**:
