@@ -1,21 +1,20 @@
 from collections import Counter
 import termtables as tt
 
-
+# Helper function to add a dot at the beginning of the production after '->'
 def append_dot(a):
     jj = a.replace("->", "->.")
     return jj
 
-
+# Function to compress a string by counting each character's occurrences
 def compress_name(name: str):
     res = Counter(name)
     comp = ''
     for r in res:
         comp += r + str(res[r])
-
     return comp
 
-
+# Function to compute the closure of a production
 def closure(a):
     temp = [a]
     for it in temp:
@@ -28,10 +27,9 @@ def closure(a):
             for k in prod:
                 if k[0][0] == jj and it not in temp:
                     temp.append(it)
-
     return temp
 
-
+# Helper function to swap the dot with the next character in the production
 def swap(new, pos):
     new = list(new)
     temp = new[pos]
@@ -43,7 +41,7 @@ def swap(new, pos):
     else:
         return "".join(new)
 
-
+# Function to compute the goto function of a given state
 def goto1(x1):
     hh = []
     pos = x1.index(".")
@@ -59,7 +57,7 @@ def goto1(x1):
     else:
         return x1
 
-
+# Function to get terminals from the grammar
 def get_terminals(gram):
     terms = set()
     for p in gram:
@@ -67,12 +65,10 @@ def get_terminals(gram):
         for t in x1[1].strip():
             if not t.isupper() and t != '.' and t != '':
                 terms.add(t)
-
     terms.add('$')
-
     return terms
 
-
+# Function to get non-terminals from the grammar
 def get_non_terminals(gram):
     terms = set()
     for p in gram:
@@ -80,27 +76,24 @@ def get_non_terminals(gram):
         for t in x1[1].strip():
             if t.isupper():
                 terms.add(t)
-
     return terms
 
-
+# Helper function to get list of graph elements for a given state
 def get_list(graph, state):
     final = []
     for g in graph:
         if int(g.split()[0]) == state:
             final.append(g)
-
     return final
 
-
 if __name__ == '__main__':
-    
     print("LR (0) Parsing")
 
     prod = []
     set_of_items = []
     c = []
 
+    # Input production rules from the user
     print("Enter productions (type 'end' to finish):")
     while True:
         production = input()
@@ -108,15 +101,18 @@ if __name__ == '__main__':
             break
         prod.append(production.strip())
 
+    # Add augmented grammar
     prod.insert(0, "X->.S")
     print("---------------------------------------------------------------")
     print("Augmented Grammar")
     print(prod)
 
+    # Assign a number to each production
     prod_num = {}
     for i in range(1, len(prod)):
         prod_num[str(prod[i])] = i
 
+    # Initialize the closure and state sets
     j = closure("X->.S")
     set_of_items.append(j)
 
@@ -218,7 +214,6 @@ if __name__ == '__main__':
                 if j.isupper():
                     ind = non_term.index(j)
                     data[len(term) + ind] = dfa[i][j]
-
                     samp[j] = str(dfa[i][j])
 
             table.append([i] + data)
@@ -236,7 +231,7 @@ if __name__ == '__main__':
     print(final_table)
     print("\n")
 
-    # Parse String
+    # Parse input string
     string = input("Enter the string to be parsed: ")
     string += '$'
     print("\n")
